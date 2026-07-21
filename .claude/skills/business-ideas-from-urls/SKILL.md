@@ -1,77 +1,96 @@
 ---
 name: business-ideas-from-urls
-description: Turn a list of article URLs (news, scientific journals, research publications, or saved browser tabs) into investor-ready business-idea proposals. For each URL, research the topic and the market around it, derive a lucrative business opportunity or monetization angle, and write a thorough primer plus a mini business plan and an investor pitch, all collected into a single dated Markdown file at a specified output location. Use this whenever the user supplies, pastes, or points to a list of URLs and wants business ideas, ways to make money, market opportunities, startup concepts, or investor-style write-ups generated from them. Trigger this even when the user doesn't say the word "skill" — a pasted batch of links plus any ask for business or monetization ideas is the signal.
+description: Turn a list of article URLs (news, scientific journals, research publications, or saved browser tabs) into a brief of low-capital, bootstrappable money-making ideas — each realistically startable for under $2,000 and nights-and-weekends effort. For each URL, research the topic and derive a high-return-on-little-investment angle, then write a punchy slug line, an at-a-glance metadata snapshot, and concrete first steps. Use this whenever the user supplies, pastes, or points to a list of URLs and wants business ideas, side hustles, ways to make money, or monetization angles generated from them. Trigger even when the user doesn't say "skill" — a batch of links plus any ask for money-making ideas is the signal.
 ---
 
 # Business Ideas from URLs
 
-Generate a set of investor-ready business proposals from a supplied list of URLs. Each URL becomes one proposal that doubles as a primer on the underlying topic and a pitch for a concrete way to make money from it.
+Turn a supplied list of URLs into a tight, high-end-brief-style set of **low-capital business ideas** — the kind of scannable brief a top business-development firm would produce. Each URL becomes one idea that could be started for **≤ $2,000 and several weeks of nights-and-weekends work**, with a clear path to profitability before any more time or money is committed.
 
-## When to use this
+## The core constraint (applies to EVERY idea)
 
-Use this whenever a list of URLs is supplied — pasted inline, provided as a file, or accumulated as browser tabs — together with a request to generate business ideas, monetization angles, market opportunities, or investor write-ups. The list may be a handful of curated links or a large batch of the week's saved tabs.
+Every idea must be realistically startable with:
+- **≤ $2,000** total initial cash, and
+- **nights-and-weekends effort** over a few weeks to launch (more time or money is fine *after* it shows profit or has an obvious path to it).
+
+Optimize for **high return on little investment.** Favor scrappy, accessible, fast-to-cash ideas over ambitious capital-heavy ventures. An idea can be a micro-service, a flip or arbitrage play, a content or small-product play, a simple investment, or even a collection/redemption play (buy-and-resell, collect-and-redeem, a productized weekend service, etc.). If the most natural idea from an article is capital-heavy, find the **low-capital wedge** into that space instead — don't propose the capital-heavy version.
 
 ## Input
 
-The input is a list of URLs. Accept them in any of these forms:
-- Pasted directly into the prompt (one per line, comma-separated, or as a bulleted list)
-- Supplied as a path to a text or Markdown file containing URLs
-- Referred to as "my open tabs" or "this week's tabs" — in that case, ask the user to paste the URLs unless a tab list has already been provided
+A list of URLs — pasted inline (one per line, comma-separated, or bulleted), supplied as a file path, or referred to as "my tabs" (if no list is actually present, ask the user to paste it).
 
-By default, generate one proposal per URL. If the caller asks for a subset (for example, "the 5 with the most lucrative potential"), first skim every URL, rank them by business potential, keep the top N, and generate proposals only for those. Note in the output which URLs were considered but not selected.
+By default, generate one idea per URL. If the list is long, or the caller asks for a subset (e.g., "the best 5"), rank the URLs by return-on-effort under the ≤ $2,000 constraint, keep the top N, and list which were considered but not selected with a one-line reason each.
+
+### Research budget (per idea) — keep resource use bounded
+
+For each selected URL: fetch the source **once**, and run **at most 2 supporting web searches** for market/context and feasibility. Do not exceed this. If a fact isn't findable within that budget, note the uncertainty rather than digging further.
+
+(Discovery of *which* URLs to use is the caller's job — when this skill is driven by the weekly routine, the routine handles article-gathering under its own search limits. This skill only researches the URLs it's handed.)
 
 ## Output
 
-Write a single Markdown file containing every proposal.
+Write a single Markdown file — a scannable brief, not an essay.
 
-- **Filename:** `business-ideas-<YYYY-MM-DD>.md`, using the current date.
-- **Location:** write it to the output directory specified by the caller. If none is specified, default to `./output/` and create the directory if it does not exist. Always state the full path of the file you wrote at the end of the run.
-- **Format:** Markdown by default. If the caller explicitly asks for a polished or investor-facing document, additionally convert the Markdown to PDF.
+- **Filename:** `business-ideas-<YYYY-MM-DD>.md` (current date).
+- **Location:** the output directory the caller specifies; default `./output/` (create it if missing). Always state the full path when done.
+- **Format:** Markdown by default; also produce a PDF if the caller asks for a polished version.
 
 Structure the file as:
-1. A short header: date, number of sources processed, one-line summary of the batch.
-2. A table of contents listing each proposal title.
-3. One section per proposal, using the structure below.
+1. Header: date, number of sources processed, one-line summary of the batch.
+2. Table of contents (idea titles).
+3. One entry per idea, in the format below.
 
-### Structure of each proposal
+### Entry format (per idea)
 
-For each selected URL, produce a section with these parts:
+Keep prose tight. No long, meandering sections — this is a brief.
 
-- **Business idea (title):** a short, memorable name for the opportunity.
-- **Source:** the URL, the publication, and one line on what the article or paper actually says.
-- **Primer — what's going on and why it matters:** a thorough, self-contained explanation of the topic in the source and its surrounding context. Assume the reader has not read the source. Cover the key facts, the "why now," and the background someone would need to evaluate the opportunity. This is the part that makes the document useful even to a reader unfamiliar with the news.
-- **The opportunity:** the specific business or way to make money the topic suggests. Be concrete about what the product or service is and who pays for it.
-- **Mini business plan** — cover each briefly but substantively:
-  - Problem being solved
-  - Product / solution
-  - Target customer and rough market size
-  - Revenue model (how it makes money)
-  - Go-to-market (how you would get the first customers)
-  - Competitive landscape and what is defensible
-  - Key risks and unknowns
-  - What it would take to start (rough scope, not a detailed budget)
-- **Investor snapshot:** a tight, compelling pitch — the "why this, why now, why it could be big" in a few sentences that could stand alone in front of an investor.
+```
+### N. <Idea Title>
+> **<Slug line — one punchy, high-impact sentence that sells the idea>**
+
+**Source:** <url> — <publication>. <one line on what the article says>
+
+<Primer: 2–4 crisp sentences — what's happening and why it opens a low-capital money-making angle right now.>
+
+**Snapshot**
+- 💵 **Initial investment:** <≤ $2,000 figure or range>
+- ⏱️ **Time to first revenue:** <estimate>
+- 🗓️ **Ongoing effort:** <nights/weekends estimate>
+- 📈 **Return potential:** <qualitative or rough numbers>
+- 🔁 **Model:** <recurring / one-off / arbitrage / flip / content / investment>
+- 🧰 **Need to start:** <key tools, skills, or assets>
+- ⚖️ **Watch-outs:** <permits, legal, or the main risk>
+- <add idea-specific metadata as useful>
+
+**First steps**
+1. <concrete, do-this-now step>
+2. <next step>
+3. <continue until the reader could reach first revenue — usually 3–6 steps>
+```
+
+**Metadata rules:** aim for **4–8 items**. Always include **initial investment** and a **time** metric. Each item is an icon (emoji) + a short bold label + a concrete value. Items can be anything relevant, even unique to the idea — e.g. 📦 units to buy, 🎯 target margin, 🌐 online vs local, ⚡ speed to cash, 📊 scalability, 🔧 skill level. **Omit any metric you can't honestly quantify** rather than padding with vague values.
+
+**First steps replace the old business-plan sections.** Do not include separate "target customer / revenue model / go-to-market / competitive landscape" write-ups — anything obvious from the idea needs no explanation. Put the useful substance into concrete, do-this-now steps that get someone to first revenue.
 
 ## Process
 
-Work through the list one URL at a time:
-
-1. **Fetch and read the source.** Retrieve the page content. If a URL is unreachable, paywalled, or dead, note it in the output and move on rather than guessing at its contents.
-2. **Research around it.** Do not rely only on the single article. Research the broader topic, the market, existing players, and adjacent developments needed to assess a real opportunity and to write an accurate primer.
-3. **Find the most lucrative angle.** Identify the business idea or monetization path with the most genuine upside for this topic — not the most obvious one if a stronger one exists.
-4. **Write the proposal** using the structure above.
-5. After all URLs are processed, **assemble the file**, add the header and table of contents, write it to the output location, and report the full path.
+1. **Fetch the source** once. If it's unreachable, paywalled, or dead, note that in the entry and move on.
+2. **Research within budget** — up to 2 supporting searches to check the market and pressure-test feasibility under the ≤ $2,000 constraint.
+3. **Find the low-capital, high-return angle** — the scrappiest viable way to make money from the topic.
+4. **Write the entry** — slug line, primer, snapshot metadata, first steps.
+5. **Assemble the file**, add header + table of contents, write it to the output location, and report the full path.
 
 ## Quality bar
 
-- The primer must be genuinely informative to someone who never read the source: thorough, accurate, grounded in the research, not padding.
-- Business ideas must be concrete and plausible, with a clear answer to "who pays, and why." Avoid vague "build a platform for X" ideas with no revenue logic.
-- Ground claims about markets, competitors, and facts in the research. Flag speculation as speculation, and do not invent statistics.
-- Keep each proposal readable on its own; the file is meant to be skimmed by an investor or used as a topic primer.
+- Every idea must pass the ≤ $2,000 + nights-and-weekends test. If it can't, reframe to the low-capital wedge or drop it.
+- Slug lines should be sharp and specific, not generic hype.
+- First steps must be concrete and doable this week — not abstract advice.
+- Ground facts in the source and research; don't invent statistics, and flag speculation as speculation.
+- Prefer clarity and brevity over volume — the brief should be skimmable.
 
 ## Notes and edge cases
 
-- **Duplicates:** if the list contains multiple URLs about the same story, merge them into one proposal citing all sources.
-- **Off-topic or low-potential links:** if a URL has no plausible business angle, say so briefly in its section rather than forcing a weak idea.
-- **Large batches:** for a long list of weekly tabs, ranking and selecting the top N is usually more useful than a thin proposal for every link — offer this if the list is long and the caller has not specified.
-- **Framing:** keep proposals to legitimate, legal business opportunities.
+- **Duplicates:** merge multiple URLs about one story into a single idea citing all sources.
+- **No viable low-capital angle:** if an article genuinely offers none, say so briefly rather than forcing a weak idea.
+- **Large batches:** rank by return-on-effort and select the top N; list the rest with one-line reasons.
+- **Framing:** legitimate, legal ideas only.
